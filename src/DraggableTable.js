@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Table, Icon } from 'antd';
+import { Table,  } from 'antd';
+import { DragOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import dragula from 'dragula';
 import 'dragula/dist/dragula.css';
@@ -12,31 +13,31 @@ class DraggableTable extends PureComponent {
     this.state = {
       data: [
         {
-          title: <Icon className="draggable" type="swap" />,
+          title: <DragOutlined className="draggable" type="swap" />,
           profession: 'Front end developer',
           key: '1',
           name: 'John'
         },
         {
-          title: <Icon className="draggable" type="swap" />,
+          title: <DragOutlined className="draggable" type="swap" />,
           profession: 'Full stack developer',
           key: '2',
           name: 'Mary Kay'
         },
         {
-          title: <Icon className="draggable" type="swap" />,
+          title: <DragOutlined className="draggable" type="swap" />,
           profession: 'CTO',
           key: '3',
           name: 'Justin T.'
         },
         {
-          title: <Icon className="draggable" type="swap" />,
+          title: <DragOutlined className="draggable" type="swap" />,
           profession: 'Support Ninja',
           key: '4',
           name: 'David B.'
         },
         {
-          title: <Icon className="draggable" type="swap" />,
+          title: <DragOutlined className="draggable" type="swap" />,
           profession: 'Investor',
           key: '5',
           name: 'Lorde'

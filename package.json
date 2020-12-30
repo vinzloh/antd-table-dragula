@@ -3,13 +3,14 @@
   "description": "Draggable ant-design Table with dragula",
   "version": "0.0.28",
   "dependencies": {
-    "antd": "2.11.0",
+    "@ant-design/icons": "^4.3.0",
+    "antd": "^4.9.4",
     "dragula": "3.7.2",
-    "react": "15.5.3",
-    "react-dom": "15.5.3"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -28,5 +29,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
