@@ -1,104 +1,90 @@
-import React, { PureComponent } from 'react';
-import { Table,  } from 'antd';
-import { DragOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
-import dragula from 'dragula';
-import 'dragula/dist/dragula.css';
-import './DraggableTable.css';
+import * as React from "react";
+import { Table } from "antd";
+import { DragOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
+import dragula from "dragula";
+import "dragula/dist/dragula.css";
+import "./DraggableTable.css";
 
-class DraggableTable extends PureComponent {
-  constructor(props) {
-    super(props);
+const columns = [
+  {
+    title: "",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Profession",
+    dataIndex: "profession",
+    key: "profession",
+  },
+];
 
-    this.state = {
-      data: [
-        {
-          title: <DragOutlined className="draggable" type="swap" />,
-          profession: 'Front end developer',
-          key: '1',
-          name: 'John'
-        },
-        {
-          title: <DragOutlined className="draggable" type="swap" />,
-          profession: 'Full stack developer',
-          key: '2',
-          name: 'Mary Kay'
-        },
-        {
-          title: <DragOutlined className="draggable" type="swap" />,
-          profession: 'CTO',
-          key: '3',
-          name: 'Justin T.'
-        },
-        {
-          title: <DragOutlined className="draggable" type="swap" />,
-          profession: 'Support Ninja',
-          key: '4',
-          name: 'David B.'
-        },
-        {
-          title: <DragOutlined className="draggable" type="swap" />,
-          profession: 'Investor',
-          key: '5',
-          name: 'Lorde'
-        }
-      ]
-    };
-    this.columns = [
-      {
-        title: '',
-        dataIndex: 'title',
-        key: 'title'
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name'
-      },
-      {
-        title: 'Profession',
-        dataIndex: 'profession',
-        key: 'profession'
-      }
-    ];
-  }
-  handleReorder = (dragIndex, draggedIndex) => {
-    const data = [...this.state.data];
-    const item = data.splice(dragIndex, 1)[0];
-    data.splice(draggedIndex, 0, item);
-    this.setState({
-      data
+const getIndexInParent = (el) => Array.from(el.parentNode.children).indexOf(el);
+
+export default function DraggableTable() {
+  const [data, setData] = React.useState([
+    {
+      title: <DragOutlined className="draggable" type="swap" />,
+      profession: "Front end developer",
+      key: "1",
+      name: "John",
+    },
+    {
+      title: <DragOutlined className="draggable" type="swap" />,
+      profession: "Full stack developer",
+      key: "2",
+      name: "Mary Kay",
+    },
+    {
+      title: <DragOutlined className="draggable" type="swap" />,
+      profession: "CTO",
+      key: "3",
+      name: "Justin T.",
+    },
+    {
+      title: <DragOutlined className="draggable" type="swap" />,
+      profession: "Support Ninja",
+      key: "4",
+      name: "David B.",
+    },
+    {
+      title: <DragOutlined className="draggable" type="swap" />,
+      profession: "Investor",
+      key: "5",
+      name: "Lorde",
+    },
+  ]);
+
+  const handleReorder = (dragIndex, draggedIndex) => {
+    setData((oldState) => {
+      const newState = [...oldState];
+      const item = newState.splice(dragIndex, 1)[0];
+      newState.splice(draggedIndex, 0, item);
+      return newState;
     });
   };
-  componentDidMount() {
-    const container = document.querySelector('.ant-table-tbody');
+
+  React.useEffect(() => {
+    let start;
+    let end;
+    const container = document.querySelector(".ant-table-tbody");
     const drake = dragula([container], {
-      moves: (el, container, handle, sibling) => {
-        this.start = this.getIndexInParent(el);
+      moves: (el) => {
+        start = getIndexInParent(el);
         return true;
-      }
+      },
     });
 
-    drake.on('drop', (el, target, source, sibling) => {
-      this.end = this.getIndexInParent(el);
-      this.handleReorder(this.start, this.end);
+    drake.on("drop", (el) => {
+      end = getIndexInParent(el);
+      handleReorder(start, end);
     });
-  }
-  getIndexInParent = el => {
-    return Array.from(el.parentNode.children).indexOf(el);
-  };
+  }, []);
 
-  render() {
-    console.log('data:', this.state.data);
-    return (
-      <div>
-        <Table
-          columns={this.columns}
-          pagination={false}
-          dataSource={this.state.data}
-        />
-      </div>
-    );
-  }
+  return <Table columns={columns} pagination={false} dataSource={data} />;
 }
-export default DraggableTable;
